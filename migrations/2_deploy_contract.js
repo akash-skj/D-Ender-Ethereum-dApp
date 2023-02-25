@@ -1,5 +1,6 @@
-const dender = artifacts.require("dender");
+const openDender = artifacts.require("openDender");
+const selectiveDender = artifacts.require("selectiveDender");
 
 module.exports = function(deployer) {
-  deployer.deploy(dender);
+  deployer.deploy(openDender);
 };
