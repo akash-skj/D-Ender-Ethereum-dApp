@@ -5,14 +5,15 @@ contract selectiveDender {
     struct tdr {
         uint id;
         string title;
-        address mngr;
         string desc;
         uint startTime;
         uint endTime;
         uint accBal;
         uint maxBid;
+        uint bidCount;
         address highestBidder;
         address lowestBidder;
+        mapping(uint => address) bids;
     } 
 
      struct bidder {
@@ -25,8 +26,7 @@ contract selectiveDender {
     mapping(address => bidder) public bidders;
 
     address public manager;
-    uint tdrCounts=0;
-    uint bidderCounts=0;
+    uint tdrCount=0;
     uint time;
     uint amt;
 
@@ -39,6 +39,20 @@ contract selectiveDender {
     payable
     {
         manager= msg.sender;
+    }
+
+    function createTender (string memory _title, string memory _desc, uint _bidO, uint _bidC) 
+    public
+    onlyOfficial
+    {
+        tdr storage t = tdrs[tdrCount];
+        t.id=tdrCount;
+        t.title=_title;
+        t.desc=_desc;
+        t.startTime=_bidO;
+        t.endTime=_bidC;
+        t.bidCount=0;
+        tdrCount++;
     }
 
     function addBidder (string memory _name, address _addr) 
@@ -61,6 +75,8 @@ contract selectiveDender {
             amt=msg.value+bidders[msg.sender].bidAmt[_tdrID];
         }else{
             amt=msg.value;
+            tdrs[_tdrID].bids[tdrs[_tdrID].bidCount]=msg.sender;
+            tdrs[_tdrID].bidCount++;
         }
         
         require(amt>tdrs[_tdrID].maxBid, "Bid is lower than the current bid.");
@@ -74,6 +90,20 @@ contract selectiveDender {
             tdrs[_tdrID].highestBidder = msg.sender;
         }
     }
+
+    function withdrawFunds (uint _tdrID) 
+    public
+    payable
+    {
+            require(tdrs[_tdrID].endTime < block.timestamp, "Bid has not ended.");
+            require(bidders[msg.sender].bidAmt[_tdrID] > 0, "You do not have anymore ether to withdraw from the contract.");
+            bool sent = payable(msg.sender).send(bidders[msg.sender].bidAmt[_tdrID]);
+            require(sent,"Error");
+            tdrs[_tdrID].accBal-=bidders[msg.sender].bidAmt[_tdrID];
+            bidders[msg.sender].bidAmt[_tdrID]=0;
+
+    }
+
 
     function highestBidOfTdr (uint _tdrID)
     public
@@ -98,19 +128,6 @@ contract selectiveDender {
     returns(uint, string memory)
     {
         return (bidders[msg.sender].bidAmt[_id], tdrs[_id].title);
-    }
-
-    function withdrawFunds (uint _tdrID) 
-    public
-    payable
-    {
-            require(tdrs[_tdrID].endTime < block.timestamp, "Bid has not ended.");
-            require(bidders[msg.sender].bidAmt[_tdrID] > 0, "You do not have anymore ether to withdraw from the contract.");
-            bool sent = payable(msg.sender).send(bidders[msg.sender].bidAmt[_tdrID]);
-            require(sent,"Error");
-            tdrs[_tdrID].accBal-=bidders[msg.sender].bidAmt[_tdrID];
-            bidders[msg.sender].bidAmt[_tdrID]=0;
-
     }
 
 }
