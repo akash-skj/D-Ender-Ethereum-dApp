@@ -1,28 +1,16 @@
-import { useState } from 'react';
-
 const App= () => {
-  
-  return (
-    <div className="flex h-screen flex-col items-center justify-center">
-      {/* The button to open modal */}
-      <label htmlFor="my-modal-3" className="btn w-max">open modal</label>
 
-      {/* Put this part before </body> tag */}
-      <input type="checkbox" id="my-modal-3" className="modal-toggle" />
-      <div className="modal">
-        <div className="modal-box relative">
-        <label htmlFor="my-modal-3" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-          <div className="form-control w-full max-w-xs flex flex-col items-center">
-            <label className="label">
-              <span className="label-text">What is your name?</span>
-              <span className="label-text-alt">Top Right label</span>
-            </label>
-            <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
-            
-          </div>
+  return (
+    <div className="hero min-h-screen" style={{ backgroundImage: `url("https://images.unsplash.com/photo-1639322537228-f710d846310a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1332&q=80")` }}>
+      <div className="hero-overlay bg-opacity-60"></div>
+      <div className="hero-content text-center text-neutral-content">
+        <div className="max-w-md">
+          <h1 className="mb-5 text-5xl font-bold">Hello there, welcome to <br></br><span className="font-extrabold">D-Ender!</span></h1>
+          <p className="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere doloremque soluta vitae enim quibusdam doloribus, et aperiam. Eius facere possimus reprehenderit dolorum id. Vitae, commodi. Eum non aperiam nihil nobis.</p>
+          <button className="btn btn-primary">Get Started</button>
         </div>
       </div>
-  </div>
+    </div>
   )
 }
 
