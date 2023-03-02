@@ -13,7 +13,8 @@ contract selectiveDender {
         uint bidCount;
         address highestBidder;
         address lowestBidder;
-        mapping(uint => address) bids;
+        uint winningBid;
+        mapping(uint => address) bidders;
     } 
 
      struct bidder {
@@ -75,7 +76,7 @@ contract selectiveDender {
             amt=msg.value+bidders[msg.sender].bidAmt[_tdrID];
         }else{
             amt=msg.value;
-            tdrs[_tdrID].bids[tdrs[_tdrID].bidCount]=msg.sender;
+            tdrs[_tdrID].bidders[tdrs[_tdrID].bidCount]=msg.sender;
             tdrs[_tdrID].bidCount++;
         }
         
@@ -104,11 +105,35 @@ contract selectiveDender {
 
     }
 
+    function selectWinner (uint _tdrID, uint _bidID)
+    public
+    payable
+    {
+        require(tdrs[_tdrID].endTime < block.timestamp, "Bid has not ended.");
+        tdrs[_tdrID].winningBid = _bidID;
+    }
+
+    function getWinningBid ( uint _tdrID )
+    public
+    view
+    returns(address winnerAddress, uint winningBidAmt)
+    {
+        require(tdrs[_tdrID].endTime < block.timestamp, "Bid has not ended.");
+        return(tdrs[_tdrID].bidders[tdrs[_tdrID].winningBid], bidders[tdrs[_tdrID].bidders[tdrs[_tdrID].winningBid]].bidAmt[_tdrID] );
+    }
+
+    function bidInfo (uint _tdrID, uint _bidID) 
+    public
+    view
+    returns(address bidderAddress, uint bidAmtt)
+    {
+        return(tdrs[_tdrID].bidders[_bidID],bidders[tdrs[_tdrID].bidders[_bidID]].bidAmt[_tdrID]);
+    }
 
     function highestBidOfTdr (uint _tdrID)
     public
     view
-    returns(uint)
+    returns(uint highestBid)
     {
         return tdrs[_tdrID].maxBid;
     }
@@ -116,7 +141,7 @@ contract selectiveDender {
     function highestBidderOfTdr (uint _tdrID)
     public
     view
-    returns(address)
+    returns(address highestBidder)
     {
         return tdrs[_tdrID].highestBidder;
     }
