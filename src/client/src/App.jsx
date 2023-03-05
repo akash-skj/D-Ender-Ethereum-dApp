@@ -1,5 +1,6 @@
-import { Navbar, Body, Footer, Sidebar, OpenTender, Admin } from "./components"
+import { Navbar, Body, Footer, Sidebar, OpenTender, Admin, SelectiveTender, Result } from "./components"
 import background from "./assets/background.avif"
+import { BrowserRouter, Route, Routes } from"react-router-dom"
 
 const App= () => {
 
@@ -15,7 +16,13 @@ const App= () => {
           <Sidebar />
         </div>
         <div className="w-full h-full">
-          <Admin />
+          <Routes>
+            <Route path='/' element={<Body/>}/>
+            <Route path='openTender' element={<OpenTender/>}/>
+            <Route path='/selectiveTender' element={<SelectiveTender/>}/>
+            <Route path='/admin' element={<Admin/>}/>
+            <Route path='/result' element={<Result/>}/>
+          </Routes>
         </div>
       </div>
 

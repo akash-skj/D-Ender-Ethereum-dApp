@@ -20,7 +20,7 @@ const getOpenContract= ()=>{
 const getSelectiveContract= ()=>{
     const provider= new ethers.providers.Web3Provider(ethereum);
     const signer = provider.getSigner();
-    const selectiveContract= new ethers.Contract(0x998dc89865be4Fee6363e572c8d606820DBa5C2f,selectiveDender.abi,signer);
+    const selectiveContract= new ethers.Contract(selectiveDender.networks[5777].address,selectiveDender.abi,signer);
 
     return selectiveContract;
 }
@@ -76,7 +76,7 @@ export const TransactionProvider =({ children })=> {
                 const transact = await openTender.createTender(title, startTime, endTime, desc);
                 console.log("openTender Result: ", transact);
             }else if(tenderType==1){
-                const transact = await openTender.createTender(title, startTime, endTime, desc);
+                const transact = await selectiveTender.createTender(title, desc, startTime, endTime);
                 console.log("SelectiveTender Result: ", transact);
             }
 
