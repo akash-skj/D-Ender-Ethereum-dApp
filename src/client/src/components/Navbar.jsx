@@ -1,18 +1,23 @@
+import react, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import logo from '../assets/logo.svg'
+import { TransactionContext } from "../context/TransactionContext";
+
 const Navbar = () => {
+
+    const { connectWallet, currentAccount } = useContext(TransactionContext);
+
     return(
-        <div className="navbar bg-base-200 bg-opacity-75 w-screen">
-        <div className="flex-1">
-            <a className="btn btn-ghost normal-case text-xl">D-Ender</a>
-        </div>
-        <div className="flex-none">
-            <ul className="menu menu-horizontal px-1">
-                <li><a className="mx-2">OPEN-TENDERS</a></li>
-                <li><a className="mx-2">SELECTIVE-TENDERS</a> </li>
-                <li>
-                    <button className="btn btn-primary text-black mx-4">CONNECT WALLET</button>
-                </li>
-            </ul>
-        </div>
+        <div className="navbar pl-5 bg-base-300 bg-opacity-80 ">
+            <div className="flex-1 ">
+                <img className='h-10' src={logo} alt="logo" />
+            </div>
+
+            <div>
+                {!currentAccount&&(<button className='btn bg-primary' type='button' onClick={connectWallet}>CONNECT</button>)}
+                {currentAccount&&(<button className='btn bg-primary hover:bg-primary-focus ' type='button' onClick={connectWallet}>CONNECTED</button>)}
+            </div>
+        
         </div>
     );
 }
