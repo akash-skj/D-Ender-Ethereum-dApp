@@ -15,7 +15,7 @@ const Navbar = () => {
 
             <div>
                 {!currentAccount&&(<button className='btn bg-primary' type='button' onClick={connectWallet}>CONNECT</button>)}
-                {currentAccount&&(<button className='btn bg-primary hover:bg-primary-focus ' type='button' onClick={connectWallet}>CONNECTED</button>)}
+                {currentAccount&&(<button className='btn bg-base-100 hover:bg-primary-focus ' type='button' onClick={connectWallet}>CONNECTED</button>)}
             </div>
         
         </div>
