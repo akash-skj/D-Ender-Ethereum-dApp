@@ -1,8 +1,15 @@
 const OpenTender = () => {
     return (
-        <div>
-            <h1>OpenTender</h1>
-            <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore cumque alias fuga fugit, iusto laudantium architecto minus eius velit repellendus delectus, veritatis repellat? Reiciendis est voluptatem aperiam totam nobis molestias.</h3>
+        <div className="flex flex-col bg-base-300 h-full ml-2 rounded-lg p-5 bg-opacity-90">
+            
+            <div>
+                <h1 className="font-bold text-4xl">OpenTender</h1>
+            </div>
+
+            <div className="flex ">
+
+            </div>
+
         </div>
     )
 }
