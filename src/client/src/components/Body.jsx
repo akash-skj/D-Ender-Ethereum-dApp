@@ -1,19 +1,23 @@
 import { Navbar, Footer} from "./";
+import { Link } from 'react-router-dom';
+
 const Body = () => {
     return(   
-        <div className="">
-            <div className="hero h-screen " style={{ backgroundImage: `url("/images/stock/photo-1507358522600-9f71e620c44e.jpg` }}>
-            <div className="hero-overlay bg-opacity-60"></div>
-            <div className="hero-content text-center text-neutral-content">
-                <div className="max-w-md">
-                    <h1 className="mb-5 text-5xl font-bold">Hello there</h1>
-                    <p className="mb-5">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-                    <button className="btn btn-primary">Get Started</button>
-                </div>
+        <div className="flex flex-col bg-base-300 h-full ml-3 rounded-xl justify-center items-center bg-opacity-80">
+
+            <div className="text-4xl font-bold">
+                Welcome to D-Ender!
             </div>
-        </div>
+            <div className="text-xl text-center font-semibold w-[700px] mt-5">
+            Welcome to our decentralized tender management platform!<br/> We're revolutionizing the traditional tender process with transparency and fairness. Our user-friendly interface, secure communication, and blockchain technology ensure an equitable and efficient bidding process. Join us today and experience the power of decentralized tender management!
+            </div>
+
+            <div className="flex flex-row mt-5">
+                <Link to='/openTender' className="btn hover:bg-primary m-2 w-[160px]">OpenTenders</Link>
+                <Link to='/selectiveTender' className="btn hover:bg-primary m-2 w-[160px]">SelectiveTenders</Link>
+            </div>
+            
         </div>  
-        
     );
 }
 

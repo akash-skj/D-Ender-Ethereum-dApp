@@ -11,7 +11,7 @@ const Admin = () => {
         <div className="flex flex-col bg-base-300 h-full ml-2 rounded-xl p-5 bg-opacity-80">
             
             <div>
-                <h1 className="font-bold text-4xl">Admin</h1>
+                <h1 className="font-bold text-3xl">ADMIN</h1>
             </div>
 
             <div className="flex h-full items-center justify-center">
