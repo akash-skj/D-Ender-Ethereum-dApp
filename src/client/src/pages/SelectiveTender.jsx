@@ -1,4 +1,4 @@
-import {TenderCards} from './';
+import { TenderCards } from '../components';
 import react, { useContext, useEffect, useState } from 'react';
 import { TransactionContext } from "../context/TransactionContext";
 
