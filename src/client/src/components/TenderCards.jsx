@@ -14,7 +14,7 @@ const TenderCards = (props) => {
                 <div className="text-3xl">
                     {props.title}
                 </div>
-                <div className="flex flex-col h-full justify-center">
+                <div className="flex flex-col h-full justify-center text-ellipsis overflow-hidden">
                     {(props.desc.length)>77 && ( <div>{props.desc.slice(0,77)} . . .</div> )}
                     {(props.desc.length)<77 && ( <div>{props.desc}</div> )}
                 </div>
