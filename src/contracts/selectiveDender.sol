@@ -113,6 +113,22 @@ contract selectiveDender {
         tdrs[_tdrID].winningBid = _bidID;
     }
 
+    function getTdrCount () 
+    public
+    view
+    returns( uint count)
+    {
+        return tdrCount;
+    }
+
+    function getTdrInfo (uint _tdrID)
+    public
+    view
+    returns (uint id,string memory title, string memory desc, uint startTime, uint endTime, uint maxBid, uint currentTime)
+    {
+        return(tdrs[_tdrID].id ,tdrs[_tdrID].title, tdrs[_tdrID].desc, tdrs[_tdrID].startTime, tdrs[_tdrID].endTime, tdrs[_tdrID].maxBid, block.timestamp);
+    }
+
     function getWinningBid ( uint _tdrID )
     public
     view
