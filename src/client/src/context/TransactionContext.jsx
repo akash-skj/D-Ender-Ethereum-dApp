@@ -104,16 +104,8 @@ export const TransactionProvider =({ children })=> {
             const endTime = parseInt(tdrInfo.endTime.toString());
             const maxBid = tdrInfo.maxBid.toString();
             const currentTime = parseInt(tdrInfo.currentTime.toString());
-            console.log(currentTime);
-            console.log(endTime);
             const ended = currentTime > endTime ;
-            console.log(ended);
-            // if( currentTime > endTime ){
-            //     ended = 1;
-            // }else{
-            //     ended = 0;
-            // }
-            
+        
             tdrsArray[i]={
                 tdrId: {id},
                 tdrTitle: {title},
@@ -127,7 +119,6 @@ export const TransactionProvider =({ children })=> {
         }
         
         setOpenTdrs(tdrsArray);
-        console.log(openTdrs);
     }
 
     const loadSelectiveTdrs = async () => {
@@ -136,28 +127,28 @@ export const TransactionProvider =({ children })=> {
 
         for( var i=0 ; i < tdrCount ; i++){
             const tdrInfo = await selectiveTender.getTdrInfo(i);
+            const id = tdrInfo.id.toString();
             const title = tdrInfo.title;
             const desc = tdrInfo.desc;
             const startTime = tdrInfo.startTime.toString();
-            const endTime = tdrInfo.endTime.toString();
+            const endTime = parseInt(tdrInfo.endTime.toString());
             const maxBid = tdrInfo.maxBid.toString();
-            const currentTime = tdrInfo.currentTime;
-            var ended;
-            if( currentTime > endTime ){
-                ended = true;
-            }else{
-                ended = false;
-            }
-            setSelectiveTdrs[i] = [{
+            const currentTime = parseInt(tdrInfo.currentTime.toString());
+            const ended = currentTime > endTime ;
+        
+            tdrsArray[i]={
+                tdrId: {id},
                 tdrTitle: {title},
                 tdrDesc: {desc},
                 tdrStartTime: {startTime},
                 tdrEndTime: {endTime},
                 tdrMaxBid: {maxBid},
                 isEnded: {ended}
-            }]
+            };
+
         }
-        console.log(openTdrs[0]);
+        
+        setSelectiveTdrs(tdrsArray);
     }
 
     const checkIfWalletIsConnected = async ()=> {
