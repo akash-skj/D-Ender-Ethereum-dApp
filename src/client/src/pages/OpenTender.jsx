@@ -1,11 +1,11 @@
-import {TenderCards} from './';
+import {TenderCards} from '../components';
 import react, { useContext, useEffect, useState } from 'react';
 import { TransactionContext } from "../context/TransactionContext";
 
 const OpenTender = () => {
     const {loadOpenTdrs, openTdrs} = useContext(TransactionContext);
 
-    const [isLoading, setLoading] = useState();
+    const [isLoading, setLoading] = useState(true);
 
     useEffect( ()=> {
         setLoading(true);

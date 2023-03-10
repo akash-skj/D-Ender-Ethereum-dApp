@@ -1,6 +1,7 @@
-import { Navbar, Body, Footer, Sidebar, OpenTender, Admin, SelectiveTender, Result } from "./components"
-import background from "./assets/background.avif"
-import { BrowserRouter, Route, Routes } from"react-router-dom"
+import { Navbar, Footer, Sidebar, Result } from "./components";
+import { Body, Admin, OpenTender, SelectiveTender } from "./pages"
+import background from "./assets/background.avif";
+import { BrowserRouter, Route, Routes } from"react-router-dom";
 
 const App= () => {
 
