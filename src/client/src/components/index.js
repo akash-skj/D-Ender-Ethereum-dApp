@@ -6,3 +6,4 @@ export{ default as SelectiveTender } from "./SelectiveTender";
 export{ default as Admin } from "./Admin";
 export{ default as Sidebar } from "./Sidebar";
 export{ default as Result } from "./Result";
+export{ default as TenderCards } from "./TenderCards";

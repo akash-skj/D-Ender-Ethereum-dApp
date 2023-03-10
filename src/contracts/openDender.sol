@@ -48,6 +48,7 @@
             t.desc=_description;
             t.startTime=_bidO;
             t.endTime=_bidC;
+            t.mngr = msg.sender;
             tdrCount++;
         }
 
@@ -79,17 +80,17 @@
             }
         }
 
-    function withdrawFunds (uint _tdrID) 
-    public
-    payable
-    {
-            require(tdrs[_tdrID].endTime < block.timestamp, "Bid has not ended.");
-            require(bidders[msg.sender].bidAmt[_tdrID] > 0, "You do not have anymore ether to withdraw from the contract.");
-            bool sent = payable(msg.sender).send(bidders[msg.sender].bidAmt[_tdrID]);
-            require(sent,"Error");
-            tdrs[_tdrID].accBal-=bidders[msg.sender].bidAmt[_tdrID];
-            bidders[msg.sender].bidAmt[_tdrID]=0;
-    }
+        function withdrawFunds (uint _tdrID) 
+        public
+        payable
+        {
+                require(tdrs[_tdrID].endTime < block.timestamp, "Bid has not ended.");
+                require(bidders[msg.sender].bidAmt[_tdrID] > 0, "You do not have anymore ether to withdraw from the contract.");
+                bool sent = payable(msg.sender).send(bidders[msg.sender].bidAmt[_tdrID]);
+                require(sent,"Error");
+                tdrs[_tdrID].accBal-=bidders[msg.sender].bidAmt[_tdrID];
+                bidders[msg.sender].bidAmt[_tdrID]=0;
+        }
 
         function payTdrMngr (uint _tdrID)
         public
@@ -102,6 +103,15 @@
             require(sent,"Payment failed");
             tdrs[_tdrID].maxBid=0;
         }
+
+        function getTdrCount ()
+        public
+        view 
+        returns(uint count)
+        {
+            return tdrCount;
+        }
+        
 
         function highestBidOfTdr (uint _tdrID)
         public
@@ -122,9 +132,9 @@
         function getTdrInfo (uint _tdrID)
         public
         view
-        returns(string memory title, string memory desc, uint startTime, uint endTime, uint maxBid)
+        returns(uint id,string memory title, string memory desc, uint startTime, uint endTime, uint maxBid, uint currentTime)
         {
-            return(tdrs[_tdrID].title, tdrs[_tdrID].desc, tdrs[_tdrID].startTime, tdrs[_tdrID].endTime, tdrs[_tdrID].maxBid);
+            return(tdrs[_tdrID].id ,tdrs[_tdrID].title, tdrs[_tdrID].desc, tdrs[_tdrID].startTime, tdrs[_tdrID].endTime, tdrs[_tdrID].maxBid, block.timestamp);
         }
 
         function getWinningBid (uint _tdrID)
@@ -135,15 +145,5 @@
             require(tdrs[_tdrID].endTime < block.timestamp, "Bid has not ended.");
             return(tdrs[_tdrID].highestBidder, tdrs[_tdrID].maxBid);
         }
-
-
-        // function testbids (uint _id) 
-        // public
-        // view
-        // returns(uint, string memory)
-        // {
-        //     return (bidders[msg.sender].bidAmt[_id], tdrs[_id].title);
-        // }
-
 
     }
