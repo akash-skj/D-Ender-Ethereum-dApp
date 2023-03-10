@@ -11,7 +11,7 @@ const App= () => {
         <Navbar />
       </div>
 
-      <div className="flex flex-row h-full m-2">
+      <div className="flex flex-row h-full m-2 overflow-hidden">
         <div className="w-max">
           <Sidebar />
         </div>

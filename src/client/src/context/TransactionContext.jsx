@@ -37,6 +37,10 @@ export const TransactionProvider =({ children })=> {
     const [endTime, setEndTime] = useState("");
     const [tenderType, setTenderType] = useState();
 
+    const [openTdrs, setOpenTdrs] = useState([]);
+    const [selectiveTdrs, setSelectiveTdrs] = useState([]);
+    const tdrsArray = [];
+
     const handleChangeTitle = (e) => {
         setTitle(e.target.value);
         console.log(title);
@@ -87,6 +91,75 @@ export const TransactionProvider =({ children })=> {
         }
     }
 
+    const loadOpenTdrs = async () => {
+
+        const tdrCount =  await openTender.getTdrCount();
+
+        for( var i=0 ; i < tdrCount ; i++){
+            const tdrInfo = await openTender.getTdrInfo(i);
+            const id = tdrInfo.id.toString();
+            const title = tdrInfo.title;
+            const desc = tdrInfo.desc;
+            const startTime = tdrInfo.startTime.toString();
+            const endTime = parseInt(tdrInfo.endTime.toString());
+            const maxBid = tdrInfo.maxBid.toString();
+            const currentTime = parseInt(tdrInfo.currentTime.toString());
+            console.log(currentTime);
+            console.log(endTime);
+            const ended = currentTime > endTime ;
+            console.log(ended);
+            // if( currentTime > endTime ){
+            //     ended = 1;
+            // }else{
+            //     ended = 0;
+            // }
+            
+            tdrsArray[i]={
+                tdrId: {id},
+                tdrTitle: {title},
+                tdrDesc: {desc},
+                tdrStartTime: {startTime},
+                tdrEndTime: {endTime},
+                tdrMaxBid: {maxBid},
+                isEnded: {ended}
+            };
+
+        }
+        
+        setOpenTdrs(tdrsArray);
+        console.log(openTdrs);
+    }
+
+    const loadSelectiveTdrs = async () => {
+
+        const tdrCount =  await selectiveTender.getTdrCount();
+
+        for( var i=0 ; i < tdrCount ; i++){
+            const tdrInfo = await selectiveTender.getTdrInfo(i);
+            const title = tdrInfo.title;
+            const desc = tdrInfo.desc;
+            const startTime = tdrInfo.startTime.toString();
+            const endTime = tdrInfo.endTime.toString();
+            const maxBid = tdrInfo.maxBid.toString();
+            const currentTime = tdrInfo.currentTime;
+            var ended;
+            if( currentTime > endTime ){
+                ended = true;
+            }else{
+                ended = false;
+            }
+            setSelectiveTdrs[i] = [{
+                tdrTitle: {title},
+                tdrDesc: {desc},
+                tdrStartTime: {startTime},
+                tdrEndTime: {endTime},
+                tdrMaxBid: {maxBid},
+                isEnded: {ended}
+            }]
+        }
+        console.log(openTdrs[0]);
+    }
+
     const checkIfWalletIsConnected = async ()=> {
         try {
             if(!ethereum) return alert("Please install Metamask");
@@ -127,7 +200,7 @@ export const TransactionProvider =({ children })=> {
 
 
     return(
-        <TransactionContext.Provider value={{connectWallet, currentAccount, handleChangeTitle, handleChangeDesc, handleChangeStartTime, handleChangeEndTime, selectOpenTender, selectSelectiveTender, createTender}}>
+        <TransactionContext.Provider value={{connectWallet, currentAccount, handleChangeTitle, handleChangeDesc, handleChangeStartTime, handleChangeEndTime, selectOpenTender, selectSelectiveTender, createTender, loadOpenTdrs, loadSelectiveTdrs, openTdrs, selectiveTdrs}}>
             {children}
         </TransactionContext.Provider>
     )

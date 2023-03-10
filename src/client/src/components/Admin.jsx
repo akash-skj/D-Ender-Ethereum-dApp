@@ -19,7 +19,7 @@ const Admin = () => {
                 <div className="">
                 
                     <div className="btn-group m-3 ">
-                        <input type="radio" name="options" data-title="OpenTender" className="btn w-[150px]" onClick={selectOpenTender}/>
+                        <input type="radio" name="options" data-title="OpenTender" className="btn w-[150px]" onClick={selectOpenTender} />
                         <input type="radio" name="options" data-title="SelectiveTender" className="btn" onClick={selectSelectiveTender} />
                     </div>
 
