@@ -38,7 +38,10 @@
             manager= msg.sender;
         }
 
-        function createTender (string memory _title,uint _bidO,uint _bidC,string memory _description)
+        function createTender (string memory _title,
+        uint _bidO,
+        uint _bidC,
+        string memory _description)
         public
         onlyOfficial
         {
@@ -132,7 +135,13 @@
         function getTdrInfo (uint _tdrID)
         public
         view
-        returns(uint id,string memory title, string memory desc, uint startTime, uint endTime, uint maxBid, uint currentTime)
+        returns(uint id,
+        string memory title, 
+        string memory desc, 
+        uint startTime, 
+        uint endTime, 
+        uint maxBid, 
+        uint currentTime)
         {
             return(tdrs[_tdrID].id ,tdrs[_tdrID].title, tdrs[_tdrID].desc, tdrs[_tdrID].startTime, tdrs[_tdrID].endTime, tdrs[_tdrID].maxBid, block.timestamp);
         }
