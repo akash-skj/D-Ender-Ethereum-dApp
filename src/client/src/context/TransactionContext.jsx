@@ -36,6 +36,9 @@ export const TransactionProvider =({ children })=> {
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
     const [tenderType, setTenderType] = useState();
+    const [bidAmt, setBidAmt] = useState();
+    const [bidderName, setBidderName] = useState();
+    const [tdrID, setTdrID] = useState();
 
     const [openTdrs, setOpenTdrs] = useState([]);
     const [selectiveTdrs, setSelectiveTdrs] = useState([]);
@@ -69,6 +72,16 @@ export const TransactionProvider =({ children })=> {
     const selectSelectiveTender = () => {
         setTenderType(1);
         console.log("SelectiveTender selected");
+    }
+
+    const handleChangeBidAmt = (e) => {
+        setBidAmt(e.target.value);
+        console.log(bidAmt);
+    }
+
+    const handleChangeBidderName = (e) => {
+        setBidderName(e.target.value);
+        console.log(bidderName);
     }
 
     const createTender = async () => {
@@ -151,6 +164,20 @@ export const TransactionProvider =({ children })=> {
         setSelectiveTdrs(tdrsArray);
     }
 
+    const placeOpenBid = async () => {
+
+        try {
+            const transact = await openTender.bid(tdrID, bidderName, {value: ethers.utils.parseEther(bidAmt.toString())});
+            console.log(transact);
+
+        } catch (error) {
+            console.log(tdrID, bidderName, bidAmt);
+
+            throw new Error("No Ethereum object");
+        }
+
+    }
+
     const checkIfWalletIsConnected = async ()=> {
         try {
             if(!ethereum) return alert("Please install Metamask");
@@ -191,7 +218,7 @@ export const TransactionProvider =({ children })=> {
 
 
     return(
-        <TransactionContext.Provider value={{connectWallet, currentAccount, handleChangeTitle, handleChangeDesc, handleChangeStartTime, handleChangeEndTime, selectOpenTender, selectSelectiveTender, createTender, loadOpenTdrs, loadSelectiveTdrs, openTdrs, selectiveTdrs}}>
+        <TransactionContext.Provider value={{connectWallet, currentAccount, handleChangeTitle, handleChangeDesc, handleChangeStartTime, handleChangeEndTime, selectOpenTender, selectSelectiveTender, createTender, loadOpenTdrs, loadSelectiveTdrs, handleChangeBidAmt, handleChangeBidderName, placeOpenBid, openTdrs, selectiveTdrs,setTdrID, tdrID}}>
             {children}
         </TransactionContext.Provider>
     )

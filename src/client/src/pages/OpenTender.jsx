@@ -10,7 +10,6 @@ const OpenTender = () => {
     useEffect( ()=> {
         setLoading(true);
         loadOpenTdrs();
-        setTimeout(()=>{console.log(Loading);},50000)
         setLoading(false);
     })
 
@@ -26,7 +25,7 @@ const OpenTender = () => {
                 :
                 <div className="flex flex-wrap mt-4">
                 {openTdrs.map((x)=>(<TenderCards key={x.tdrId.id.toString()} title = {x.tdrTitle.title} desc = {x.tdrDesc.desc} 
-                ended = {x.isEnded.ended} />))}
+                ended = {x.isEnded.ended} id = {x.tdrId.id.toString()} />))}
                 </div>
             }
 

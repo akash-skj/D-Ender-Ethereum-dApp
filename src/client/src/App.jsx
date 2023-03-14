@@ -1,5 +1,5 @@
 import { Navbar, Footer, Sidebar, Result } from "./components";
-import { Body, Admin, OpenTender, SelectiveTender } from "./pages"
+import { Body, Admin, OpenTender, SelectiveTender, OpenBidPage } from "./pages"
 import background from "./assets/background.avif";
 import { BrowserRouter, Route, Routes } from"react-router-dom";
 
@@ -23,6 +23,7 @@ const App= () => {
             <Route path='/selectiveTender' element={<SelectiveTender/>}/>
             <Route path='/admin' element={<Admin/>}/>
             <Route path='/result' element={<Result/>}/>
+            <Route path='/openBidPage' element={<OpenBidPage/>}/>
           </Routes>
         </div>
       </div>
