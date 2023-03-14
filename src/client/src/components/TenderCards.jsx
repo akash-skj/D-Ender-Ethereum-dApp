@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const TenderCards = (props) => {
     
 
@@ -19,7 +21,9 @@ const TenderCards = (props) => {
                     {(props.desc.length)<250 && ( <div>{props.desc}</div> )}
                 </div>
                 <div>
-                    <button className="btn bg-base-100 m-3">Open</button>
+                    <Link to="/OpenBidPage" state={{tdr:{props}}}>  
+                        <button className="btn bg-base-100 m-3">Open</button>
+                    </Link>
                 </div>
             </div>
             }
