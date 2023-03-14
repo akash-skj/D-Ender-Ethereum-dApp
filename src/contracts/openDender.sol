@@ -13,6 +13,8 @@
             uint accBal;
             uint maxBid;
             address highestBidder;
+            uint bidCount;
+            mapping(uint => address) bidders;
         }
 
         struct bidder {
@@ -38,10 +40,7 @@
             manager= msg.sender;
         }
 
-        function createTender (string memory _title,
-        uint _bidO,
-        uint _bidC,
-        string memory _description)
+        function createTender (string memory _title,uint _bidO,uint _bidC,string memory _description)
         public
         onlyOfficial
         {
@@ -65,6 +64,8 @@
                 amt=msg.value+bidders[msg.sender].bidAmt[_tdrID];
             }else{
                 amt=msg.value;
+                tdrs[_tdrID].bidders[tdrs[_tdrID].bidCount]=msg.sender;
+                tdrs[_tdrID].bidCount++;
             }
             
             require(amt>tdrs[_tdrID].maxBid, "Bid is lower than the current bid.");
@@ -135,13 +136,7 @@
         function getTdrInfo (uint _tdrID)
         public
         view
-        returns(uint id,
-        string memory title, 
-        string memory desc, 
-        uint startTime, 
-        uint endTime, 
-        uint maxBid, 
-        uint currentTime)
+        returns(uint id,string memory title, string memory desc, uint startTime, uint endTime, uint maxBid, uint currentTime)
         {
             return(tdrs[_tdrID].id ,tdrs[_tdrID].title, tdrs[_tdrID].desc, tdrs[_tdrID].startTime, tdrs[_tdrID].endTime, tdrs[_tdrID].maxBid, block.timestamp);
         }
@@ -153,6 +148,14 @@
         {   
             require(tdrs[_tdrID].endTime < block.timestamp, "Bid has not ended.");
             return(tdrs[_tdrID].highestBidder, tdrs[_tdrID].maxBid);
+        }
+
+        function getBiddersOfTdr (uint _tdrID, uint _bidID)
+        public
+        view
+        returns(address bidder, uint bidAmt)
+        {
+            return(tdrs[_tdrID].bidders[_bidID], bidders[tdrs[_tdrID].bidders[_bidID]].bidAmt[_tdrID]);
         }
 
     }
