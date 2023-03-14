@@ -42,7 +42,10 @@ contract selectiveDender {
         manager= msg.sender;
     }
 
-    function createTender (string memory _title, string memory _desc, uint _bidO, uint _bidC) 
+    function createTender (string memory _title, 
+    string memory _desc, 
+    uint _bidO, 
+    uint _bidC) 
     public
     onlyOfficial
     {
@@ -124,9 +127,20 @@ contract selectiveDender {
     function getTdrInfo (uint _tdrID)
     public
     view
-    returns (uint id,string memory title, string memory desc, uint startTime, uint endTime, uint maxBid, uint currentTime)
+    returns (uint id,
+    string memory title, 
+    string memory desc, 
+    uint startTime, 
+    uint endTime, 
+    uint maxBid, 
+    uint currentTime)
     {
-        return(tdrs[_tdrID].id ,tdrs[_tdrID].title, tdrs[_tdrID].desc, tdrs[_tdrID].startTime, tdrs[_tdrID].endTime, tdrs[_tdrID].maxBid, block.timestamp);
+        return(tdrs[_tdrID].id ,
+        tdrs[_tdrID].title, 
+        tdrs[_tdrID].desc, 
+        tdrs[_tdrID].startTime, 
+        tdrs[_tdrID].endTime,
+         tdrs[_tdrID].maxBid, block.timestamp);
     }
 
     function getWinningBid ( uint _tdrID )
@@ -135,7 +149,8 @@ contract selectiveDender {
     returns(address winnerAddress, uint winningBidAmt)
     {
         require(tdrs[_tdrID].endTime < block.timestamp, "Bid has not ended.");
-        return(tdrs[_tdrID].bidders[tdrs[_tdrID].winningBid], bidders[tdrs[_tdrID].bidders[tdrs[_tdrID].winningBid]].bidAmt[_tdrID] );
+        return(tdrs[_tdrID].bidders[tdrs[_tdrID].winningBid], 
+        bidders[tdrs[_tdrID].bidders[tdrs[_tdrID].winningBid]].bidAmt[_tdrID] );
     }
 
     function bidInfo (uint _tdrID, uint _bidID) 

@@ -13,6 +13,8 @@
             uint accBal;
             uint maxBid;
             address highestBidder;
+            uint bidCount;
+            mapping(uint => address) bidders;
         }
 
         struct bidder {
@@ -62,6 +64,8 @@
                 amt=msg.value+bidders[msg.sender].bidAmt[_tdrID];
             }else{
                 amt=msg.value;
+                tdrs[_tdrID].bidders[tdrs[_tdrID].bidCount]=msg.sender;
+                tdrs[_tdrID].bidCount++;
             }
             
             require(amt>tdrs[_tdrID].maxBid, "Bid is lower than the current bid.");
@@ -144,6 +148,14 @@
         {   
             require(tdrs[_tdrID].endTime < block.timestamp, "Bid has not ended.");
             return(tdrs[_tdrID].highestBidder, tdrs[_tdrID].maxBid);
+        }
+
+        function getBiddersOfTdr (uint _tdrID, uint _bidID)
+        public
+        view
+        returns(address bidder, uint bidAmt)
+        {
+            return(tdrs[_tdrID].bidders[_bidID], bidders[tdrs[_tdrID].bidders[_bidID]].bidAmt[_tdrID]);
         }
 
     }
