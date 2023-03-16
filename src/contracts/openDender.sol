@@ -157,5 +157,13 @@
         {
             return(tdrs[_tdrID].bidders[_bidID], bidders[tdrs[_tdrID].bidders[_bidID]].bidAmt[_tdrID]);
         }
+         
+        function getBidderCountofTdr (uint _tdrID) 
+        public
+        view
+        returns(uint count)
+        {
+            return tdrs[_tdrID].bidCount;
+        }
 
     }

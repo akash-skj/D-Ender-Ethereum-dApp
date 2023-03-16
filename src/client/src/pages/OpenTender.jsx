@@ -1,6 +1,7 @@
 import {TenderCards} from '../components';
 import react, { useContext, useEffect, useState } from 'react';
 import { TransactionContext } from "../context/TransactionContext";
+import loader from '../assets/loader.svg'
 
 const OpenTender = () => {
     const {loadOpenTdrs, openTdrs} = useContext(TransactionContext);
@@ -8,9 +9,12 @@ const OpenTender = () => {
     const [isLoading, setLoading] = useState(true);
 
     useEffect( ()=> {
-        setLoading(true);
-        loadOpenTdrs();
-        setLoading(false);
+        setTimeout(() => {
+            setLoading(true);
+            loadOpenTdrs();
+            setLoading(false);  
+        }, 1000);
+          
     })
 
     return (
@@ -21,11 +25,13 @@ const OpenTender = () => {
             </div>
 
             {isLoading?
-                <div>Loading</div>
+                <div className='flex justify-center items-center h-full'>
+                    <img src={loader} className='h-[100px]' alt="loading Animation" />
+                </div>
                 :
                 <div className="flex flex-wrap mt-4">
                 {openTdrs.map((x)=>(<TenderCards key={x.tdrId.id.toString()} title = {x.tdrTitle.title} desc = {x.tdrDesc.desc} 
-                ended = {x.isEnded.ended} id = {x.tdrId.id.toString()} />))}
+                ended = {x.isEnded.ended} id = {x.tdrId.id.toString()} type = '0' />))}
                 </div>
             }
 

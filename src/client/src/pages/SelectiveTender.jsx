@@ -1,17 +1,22 @@
 import { TenderCards } from '../components';
 import react, { useContext, useEffect, useState } from 'react';
 import { TransactionContext } from "../context/TransactionContext";
+import loader from '../assets/loader.svg'
 
 const SelectiveTender = () => {
     const {loadSelectiveTdrs, selectiveTdrs} = useContext(TransactionContext);
 
-    const [isLoading, setLoading] = useState();
+    const [isLoading, setLoading] = useState(true);
 
     useEffect( ()=> {
-        setLoading(true);
-        loadSelectiveTdrs();
-        setTimeout(()=>{console.log(Loading);},50000)
-        setLoading(false);
+        
+        setTimeout(()=>{
+            setLoading(true);
+            loadSelectiveTdrs();
+            setLoading(false);
+        },1000);
+            
+        
     })
 
     return (
@@ -22,15 +27,15 @@ const SelectiveTender = () => {
             </div>
 
             {isLoading?
-                <div>Loading</div>
+                <div className='flex justify-center items-center h-full'>
+                    <img src={loader} className='h-[100px]' alt="loading Animation" />
+                </div>
                 :
                 <div className="flex flex-wrap mt-4">
                 {selectiveTdrs.map((x)=>(<TenderCards key={x.tdrId.id.toString()} title = {x.tdrTitle.title} desc = {x.tdrDesc.desc} 
-                ended = {x.isEnded.ended} id = {x.tdrId.id.toString()} />))}
+                ended = {x.isEnded.ended} id = {x.tdrId.id.toString()} type = '1' />))}
                 </div>
             }
-
-           
 
         </div>
     )
