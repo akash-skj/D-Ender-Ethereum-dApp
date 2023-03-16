@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 const TenderCards = (props) => {
     
+    useEffect(()=>{
+        // console.log(props.type);
+    })
 
     return(
         
@@ -21,9 +25,15 @@ const TenderCards = (props) => {
                     {(props.desc.length)<250 && ( <div>{props.desc}</div> )}
                 </div>
                 <div>
+                    {props.type=='1'?
+                    <Link to="/SelectiveBidPage" state={{tdr:{props}}}>  
+                    <button className="btn bg-base-100 m-3">Open s</button>
+                    </Link>
+                    :
                     <Link to="/OpenBidPage" state={{tdr:{props}}}>  
                         <button className="btn bg-base-100 m-3">Open</button>
                     </Link>
+                }
                 </div>
             </div>
             }

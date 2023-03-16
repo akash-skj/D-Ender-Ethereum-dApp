@@ -177,14 +177,20 @@ contract selectiveDender {
         return tdrs[_tdrID].highestBidder;
     }
 
-
-    function testbids (uint _id) 
+    function getBiddersOfTdr (uint _tdrID, uint _bidID)
     public
     view
-    returns(uint, string memory)
+    returns(address bidder, uint bidAmt)
     {
-        return (bidders[msg.sender].bidAmt[_id], tdrs[_id].title);
+        return(tdrs[_tdrID].bidders[_bidID], bidders[tdrs[_tdrID].bidders[_bidID]].bidAmt[_tdrID]);
+    }
+   
+    function getBidderCountofTdr (uint _tdrID) 
+    public
+    view
+    returns(uint count)
+    {
+        return tdrs[_tdrID].bidCount;
     }
 
 }
-
