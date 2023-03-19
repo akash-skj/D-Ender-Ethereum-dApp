@@ -29,7 +29,7 @@ The system uses smart contracts, which are self-executing computer programs, to 
 
 1. Clone the project using git :
 ```shell
-	git clone https://github.com/akash-skj/D-Ender-Ethereum-dApp.git
+git clone https://github.com/akash-skj/D-Ender-Ethereum-dApp.git
 ```
 2. Download and install **NodeJS**
 
@@ -37,7 +37,7 @@ The system uses smart contracts, which are self-executing computer programs, to 
 
 3. Install **Truffle CLI** using NPM:
 ```shell
-	npm i truffle
+npm i truffle
 ```
 4. Download and install **Ganache** 
  
@@ -45,8 +45,8 @@ The system uses smart contracts, which are self-executing computer programs, to 
 	
 5. Change directory to Client and install all packages using NPM
 ```shell
-	cd src/client
-	npm install
+cd src/client
+npm install
 ```
 
 ### Deploying
@@ -56,11 +56,11 @@ The system uses smart contracts, which are self-executing computer programs, to 
 2.  Configure Ganache Network in Metamask wallet.
 3.   Migrate the smart contract to the local Etherrum blockchain using Truffle:
 ```shell
-		truffle migrate
+truffle migrate
 ```
 4. Change directory to Client and deploy it in local host :
 ```shell
-	npm run dev
+npm run dev
 ```
 >The dApp will be hosted in http://127.0.0.1:5173/ , connect your wallet and start making transactions. All those transactions can be viewed in the local Ganache GUI.
 
