@@ -5,6 +5,10 @@ import selectiveDender from '../../../abis/selectiveDender.json';
 
 export const TransactionContext= React.createContext();
 
+if(typeof window.ethereum == 'undefined'){
+    alert("Install Metamask!");
+}
+
 const { ethereum }= window;
 
 window.ethereum;
@@ -110,31 +114,32 @@ export const TransactionProvider =({ children })=> {
     const loadOpenTdrs = async () => {
 
         const tdrCount =  await openTender.getTdrCount();
-
-        for( var i=0 ; i < tdrCount ; i++){
-            const tdrInfo = await openTender.getTdrInfo(i);
-            const id = tdrInfo.id.toString();
-            const title = tdrInfo.title;
-            const desc = tdrInfo.desc;
-            const startTime = tdrInfo.startTime.toString();
-            const endTime = parseInt(tdrInfo.endTime.toString());
-            const maxBid = tdrInfo.maxBid.toString();
-            const currentTime = parseInt(tdrInfo.currentTime.toString());
-            const ended = currentTime > endTime ;
-        
-            tdrsArray[i]={
-                tdrId: {id},
-                tdrTitle: {title},
-                tdrDesc: {desc},
-                tdrStartTime: {startTime},
-                tdrEndTime: {endTime},
-                tdrMaxBid: {maxBid},
-                isEnded: {ended},
-            };
-
+        if(tdrCount>0){
+            for( var i=0 ; i < tdrCount ; i++){
+                const tdrInfo = await openTender.getTdrInfo(i);
+                const id = tdrInfo.id.toString();
+                const title = tdrInfo.title;
+                const desc = tdrInfo.desc;
+                const startTime = tdrInfo.startTime.toString();
+                const endTime = parseInt(tdrInfo.endTime.toString());
+                const maxBid = tdrInfo.maxBid.toString();
+                const currentTime = parseInt(tdrInfo.currentTime.toString());
+                const ended = currentTime > endTime ;
+            
+                tdrsArray[i]={
+                    tdrId: {id},
+                    tdrTitle: {title},
+                    tdrDesc: {desc},
+                    tdrStartTime: {startTime},
+                    tdrEndTime: {endTime},
+                    tdrMaxBid: {maxBid},
+                    isEnded: {ended},
+                };
+    
+            }
+            
+            setOpenTdrs(tdrsArray);
         }
-        
-        setOpenTdrs(tdrsArray);
     }
 
     const loadSelectiveTdrs = async () => {
