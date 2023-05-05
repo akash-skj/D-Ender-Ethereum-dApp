@@ -27,7 +27,7 @@ const TenderCards = (props) => {
                 <div>
                     {props.type=='1'?
                     <Link to="/SelectiveBidPage" state={{tdr:{props}}}>  
-                    <button className="btn bg-base-100 m-3">Open s</button>
+                    <button className="btn bg-base-100 m-3">Open</button>
                     </Link>
                     :
                     <Link to="/OpenBidPage" state={{tdr:{props}}}>  
