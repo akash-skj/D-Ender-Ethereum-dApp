@@ -1,8 +1,6 @@
+![D-Ender-Ethereum-dApp](https://socialify.git.ci/akash-skj/D-Ender-Ethereum-dApp/image?description=1&font=Source%20Code%20Pro&forks=1&issues=1&language=1&logo=https%3A%2F%2Fi.ibb.co%2Ff4zDpLt%2Flogo2.png&name=1&pattern=Plus&pulls=1&stargazers=1&theme=Dark)
 
-
-
-# D-Ender <img width="100px" style="color:red" src="https://i.ibb.co/f4zDpLt/logo2.png" alt="Logo of the project" align="right">
-
+# D-Ender 
 The Decentralized Tender Management System is a web-based platform built using Vite React and Ethereum blockchain technology. The platform provides a secure, transparent, and tamper-proof tender management process, allowing organizations to conduct their procurement process in a decentralized and efficient way.
 
 The system uses smart contracts, which are self-executing computer programs, to manage the tender process. This ensures that the process is transparent, as all parties involved in the tender process can see the progress of the tender, bids, and other related information.
