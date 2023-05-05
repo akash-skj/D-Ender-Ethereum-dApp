@@ -48,7 +48,8 @@ export const TransactionProvider =({ children })=> {
     const [selectiveTdrs, setSelectiveTdrs] = useState([]);
     const [OpenBids, setOpenBids] = useState([]);
     const [SelectiveBids, setSelectiveBids] = useState([]);
-    const tdrsArray = [];
+    const opentdrsArray = [];
+    const selectivetdrsArray = [];
     const bidsArray = [];
 
     const handleChangeTitle = (e) => {
@@ -126,7 +127,7 @@ export const TransactionProvider =({ children })=> {
                 const currentTime = parseInt(tdrInfo.currentTime.toString());
                 const ended = currentTime > endTime ;
             
-                tdrsArray[i]={
+                opentdrsArray[i]={
                     tdrId: {id},
                     tdrTitle: {title},
                     tdrDesc: {desc},
@@ -138,7 +139,7 @@ export const TransactionProvider =({ children })=> {
     
             }
             
-            setOpenTdrs(tdrsArray);
+            setOpenTdrs(opentdrsArray);
         }
     }
 
@@ -157,7 +158,7 @@ export const TransactionProvider =({ children })=> {
             const currentTime = parseInt(tdrInfo.currentTime.toString());
             const ended = currentTime > endTime ;
         
-            tdrsArray[i]={
+            selectivetdrsArray[i]={
                 tdrId: {id},
                 tdrTitle: {title},
                 tdrDesc: {desc},
@@ -169,7 +170,7 @@ export const TransactionProvider =({ children })=> {
 
         }
         
-        setSelectiveTdrs(tdrsArray);
+        setSelectiveTdrs(selectivetdrsArray);
     }
 
     const placeOpenBid = async () => {
