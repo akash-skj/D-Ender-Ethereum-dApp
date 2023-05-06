@@ -1,11 +1,32 @@
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const TenderCards = (props) => {
+
+    const[secs, setSecs] = useState(10);
+    const[mins,setMins] = useState(1);
+    const[hrs,setHrs] = useState(23);
+    const[days,setDays] = useState(2);
     
     useEffect(()=>{
-        // console.log(props.type);
-    })
+        const interval = setInterval(()=>{
+            if(secs>0){
+                setSecs(secs-1);
+            }if(secs==0){
+                setSecs(59);
+                if(mins>0){
+                    setMins(mins-1);
+                }
+            }if(mins==0){
+                setMins(59);
+                if(hrs>0){
+                    setHrs(hrs-1);
+                }
+            }
+        },1000);
+        return () => clearInterval(interval);
+
+    },[secs])
 
     return(
         
@@ -24,6 +45,15 @@ const TenderCards = (props) => {
                     {(props.desc.length)>250 && ( <div>{props.desc.slice(0,77)} . . .</div> )}
                     {(props.desc.length)<250 && ( <div>{props.desc}</div> )}
                 </div>
+
+                <div className="flex flex-row justify-evenly">
+                    <span className="countdown font-mono text-2xl  bg-neutral rounded-xl p-2">
+                        <span style={{"--value":hrs}}></span>h:
+                        <span style={{"--value":mins}}></span>m:
+                        <span style={{"--value":secs}}></span>s
+                    </span>
+                </div>
+
                 <div>
                     {props.type=='1'?
                     <Link to="/SelectiveBidPage" state={{tdr:{props}}}>  
