@@ -33,7 +33,7 @@ const SelectiveTender = () => {
                 :
                 <div className="flex flex-wrap mt-5">
                 {selectiveTdrs.map((x)=>(<TenderCards key={x.tdrId.id} title = {x.tdrTitle.title} desc = {x.tdrDesc.desc} 
-                ended = {x.isEnded.ended} id = {x.tdrId.id.toString()} type = '1' />))}
+                ended = {x.isEnded.ended} id = {x.tdrId.id.toString()} startTime = {x.tdrStartTime.startTime} endTime = {x.tdrEndTime.endTime} currentTime = {x.currentTime.currentTime} type = '1' />))}
                 </div>
             }
 

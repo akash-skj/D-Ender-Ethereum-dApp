@@ -20,15 +20,18 @@ const openBidPage = (props)=>{
 
     useEffect(()=>{
         setTdrID(id);
+        // console.log(OpenBids);
         // console.log(id);
-        setTimeout(()=>{
-            setLoading(true);
-            loadOpenTdrs();
-            getPrevOpenBids();
-            setLoading(false);
-
-        },1000)
         
+        loadOpenTdrs();
+        getPrevOpenBids();
+        
+    })
+
+    useEffect(()=>{
+        setTimeout(()=>{
+            setLoading(false);
+        },3000)
     })
     
 
@@ -44,11 +47,6 @@ const openBidPage = (props)=>{
                     {opentdr.tdrTitle.title}
                 </div>
                 <div className='row-span-3'>
-                    {opentdr.tdrDesc.desc}
-                    {opentdr.tdrDesc.desc}
-
-                    {opentdr.tdrDesc.desc}
-
                     {opentdr.tdrDesc.desc}
 
                 </div>
@@ -89,7 +87,7 @@ const openBidPage = (props)=>{
                                 {OpenBids.map((x)=>(<div className=' flex flex-row justify-between' key={x.bidderAdr.bidder}> 
                                     <div className='px-5'>{x.bidderAdr.bidder}</div>
                                     <div className='px-5'>{(x.amt.bidderAmt)/10**18} ETH</div>
-                                 </div>))}
+                                </div>))}
                             </div>
                         }
                     </div>

@@ -31,7 +31,7 @@ const OpenTender = () => {
                 :
                 <div className="flex flex-wrap mt-4">
                 {openTdrs.map((x)=>(<TenderCards key={x.tdrId.id} title = {x.tdrTitle.title} desc = {x.tdrDesc.desc} 
-                ended = {x.isEnded.ended} id = {x.tdrId.id.toString()} type = '0' />))}
+                ended = {x.isEnded.ended} id = {x.tdrId.id.toString()} startTime = {x.tdrStartTime.startTime} endTime = {x.tdrEndTime.endTime} currentTime = {x.currentTime.currentTime} type = '0' />))}
                 </div>
             }
 

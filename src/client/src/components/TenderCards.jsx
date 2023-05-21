@@ -1,17 +1,28 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Countdown } from "./"
 
 const TenderCards = (props) => {
 
-    const[secs, setSecs] = useState(10);
-    const[mins,setMins] = useState(1);
-    const[hrs,setHrs] = useState(23);
-    const[days,setDays] = useState(2);
+    const startDate = new Date(props.startTime*1000);
+    const currentDate = new Date(props.currentTime*1000);
+
+    const date = startDate - currentDate;
+
+    const started = date<0? true:false;
+    
+    const[secs, setSecs] = useState(Math.abs(Math.floor((date % (1000 * 60)) / 1000)));
+    const[mins,setMins] = useState(Math.abs(Math.floor((date % (1000 * 60 * 60)) / (1000 * 60))));
+    const[hrs,setHrs] = useState(Math.abs(Math.floor((date % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))));
+    const[days,setDays] = useState(Math.abs(Math.floor(date / (1000 * 60 * 60 * 24))));
+
+    // setDays(startDate.getHours()-currentDate.getHours());
     
     useEffect(()=>{
         const interval = setInterval(()=>{
             if(secs>0){
                 setSecs(secs-1);
+                console.log();
             }if(secs==0){
                 setSecs(59);
                 if(mins>0){
@@ -29,7 +40,6 @@ const TenderCards = (props) => {
     },[secs])
 
     return(
-        
         <div className=" flex flex-row flex-wrap justify-evenly ">
 
             {props.ended?
@@ -46,13 +56,8 @@ const TenderCards = (props) => {
                     {(props.desc.length)<250 && ( <div>{props.desc}</div> )}
                 </div>
 
-                <div className="flex flex-row justify-evenly">
-                    <span className="countdown font-mono text-2xl  bg-neutral rounded-xl p-2">
-                        <span style={{"--value":hrs}}></span>h:
-                        <span style={{"--value":mins}}></span>m:
-                        <span style={{"--value":secs}}></span>s
-                    </span>
-                </div>
+                <Countdown days = {days} hours = {hrs} minutes = {mins} seconds = {secs} state = {started} /> 
+                
 
                 <div>
                     {props.type=='1'?

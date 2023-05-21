@@ -133,6 +133,7 @@ export const TransactionProvider =({ children })=> {
                     tdrDesc: {desc},
                     tdrStartTime: {startTime},
                     tdrEndTime: {endTime},
+                    currentTime: {currentTime},
                     tdrMaxBid: {maxBid},
                     isEnded: {ended},
                 };
@@ -164,6 +165,7 @@ export const TransactionProvider =({ children })=> {
                 tdrDesc: {desc},
                 tdrStartTime: {startTime},
                 tdrEndTime: {endTime},
+                currentTime: {currentTime},
                 tdrMaxBid: {maxBid},
                 isEnded: {ended},
             };
@@ -219,6 +221,7 @@ export const TransactionProvider =({ children })=> {
             console.log(error);
             throw new Error("No Ethereum object");  
         }
+        // console.log(bidsArray);
         setOpenBids(bidsArray);
     }
 
