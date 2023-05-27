@@ -184,7 +184,7 @@ contract selectiveDender {
     function getBiddersOfTdr (uint _tdrID, uint _bidID)
     public
     view
-    returns(address bidder, uint bidAmt)
+    returns(address bidderAdr, uint bidAmt)
     {
         return(tdrs[_tdrID].bidders[_bidID], bidders[tdrs[_tdrID].bidders[_bidID]].bidAmt[_tdrID]);
     }

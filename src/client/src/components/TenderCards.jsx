@@ -4,7 +4,7 @@ import { Countdown } from "./"
 
 const TenderCards = (props) => {
 
-    const startDate = new Date(props.startTime*1000);
+    const startDate =   new Date(props.startTime*1000);
     const currentDate = new Date(props.currentTime*1000);
 
     const date = startDate - currentDate;
@@ -21,18 +21,23 @@ const TenderCards = (props) => {
     useEffect(()=>{
         const interval = setInterval(()=>{
             if(secs>0){
+                console.log(hrs);
                 setSecs(secs-1);
-                console.log();
-            }if(secs==0){
+            }if(secs==0 && mins>0){
                 setSecs(59);
                 if(mins>0){
                     setMins(mins-1);
                 }
-            }if(mins==0){
+            }if(mins==0&&hrs>0){
                 setMins(59);
                 if(hrs>0){
                     setHrs(hrs-1);
                 }
+            }if(mins==0&&hrs==0){
+                setMins(0);
+                
+                setHrs(0);
+                
             }
         },1000);
         return () => clearInterval(interval);
@@ -56,7 +61,7 @@ const TenderCards = (props) => {
                     {(props.desc.length)<250 && ( <div>{props.desc}</div> )}
                 </div>
 
-                <Countdown days = {days} hours = {hrs} minutes = {mins} seconds = {secs} state = {started} /> 
+                <Countdown days = {days} hours = {hrs} minutes = {mins} seconds = {secs} state = {started} tipData = {"Starts in"} /> 
                 
 
                 <div>

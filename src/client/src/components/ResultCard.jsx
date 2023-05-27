@@ -22,7 +22,7 @@ if(props.ended){
                 </div>
                 
                 <div className="flex flex-col h-full w-1/2">
-                    <div className="flex flex-col justify-evenly items-center h-full w-full">
+                    <div className="flex flex-col justify-evenly items- h-full w-full">
                         <div>
     
                             <div className="flex w-full m-1">
@@ -30,22 +30,28 @@ if(props.ended){
                                     Address:
                                 </div>
                                 <div className="text-xl mx-2">
-                                    0xfC38CA0814417C0Cf0c4D4595462A3E784594eC8
+                                    {props.winnerAddress}
                                 </div>
                             </div> 
                              
                         </div>  
-                        <div>
+                        <div className="w-full">
                            
-                            <div className="flex w-full m-1">
-                                <div className="text-xl font-bold">
-                                    Winning Bid:
+                            <div className="flex w-full m-1 justify-between ">
+                                <div className="flex flex-row">
+                                    <div className="text-xl font-bold">
+                                        Winning Bid:
+                                    </div>
+                                    <div className="text-xl mx-2 font-semibold">
+                                        {(props.winningBid)/(10**18)} ETH
+                                    </div>
                                 </div>
-                                <div className="text-xl mx-2">
-                                    5 ETH
+                               
+                                <div className="mr-[140px]">
+                                    <button className="btn btn-base-100 hover:btn-primary"> Withdraw</button>
                                 </div>
                             </div> 
-    
+
                         </div>
                     </div> 
                 </div>

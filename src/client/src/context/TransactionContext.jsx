@@ -63,12 +63,12 @@ export const TransactionProvider =({ children })=> {
     }
 
     const handleChangeStartTime = (e) => {
-        setStartTime(e.target.value);
+        setStartTime(e);
         console.log(startTime);
     }
 
     const handleChangeEndTime = (e) => {
-        setEndTime(e.target.value);
+        setEndTime(e);
         console.log(endTime);
     }
 
@@ -117,6 +117,8 @@ export const TransactionProvider =({ children })=> {
         const tdrCount =  await openTender.getTdrCount();
         if(tdrCount>0){
             for( var i=0 ; i < tdrCount ; i++){
+                var winnerAddress;
+                var winningBid=0;
                 const tdrInfo = await openTender.getTdrInfo(i);
                 const id = tdrInfo.id.toString();
                 const title = tdrInfo.title;
@@ -126,6 +128,12 @@ export const TransactionProvider =({ children })=> {
                 const maxBid = tdrInfo.maxBid.toString();
                 const currentTime = parseInt(tdrInfo.currentTime.toString());
                 const ended = currentTime > endTime ;
+
+                if(ended){
+                    const tdrWinner = await openTender.getWinningBid(i);
+                    winnerAddress = tdrWinner.winnerAddress;
+                    winningBid = tdrWinner.winningBidAmt;
+                }
             
                 opentdrsArray[i]={
                     tdrId: {id},
@@ -136,6 +144,8 @@ export const TransactionProvider =({ children })=> {
                     currentTime: {currentTime},
                     tdrMaxBid: {maxBid},
                     isEnded: {ended},
+                    winnerAdr : {winnerAddress},
+                    winningBid : {winningBid}
                 };
     
             }
@@ -209,7 +219,7 @@ export const TransactionProvider =({ children })=> {
                     const count = await openTender.getBidderCountofTdr(tdrID);
                     for(var i=0; i <count;i++){
                         const bid = await openTender.getBiddersOfTdr(tdrID,i);
-                        const bidder=bid.bidder.toString();
+                        const bidder=bid.bidderAdr.toString();
                         const bidderAmt= bid.bidAmt.toString();
                         bidsArray[i]={
                             bidderAdr: {bidder},
@@ -231,7 +241,7 @@ export const TransactionProvider =({ children })=> {
                     const count = await selectiveTender.getBidderCountofTdr(tdrID);
                     for(var i=0; i <count;i++){
                         const bid = await selectiveTender.getBiddersOfTdr(tdrID,i);
-                        const bidder=bid.bidder.toString();
+                        const bidder= bid.bidderAdr.toString();
                         const bidderAmt= bid.bidAmt.toString();
                         bidsArray[i]={
                             bidderAdr: {bidder},
@@ -244,6 +254,22 @@ export const TransactionProvider =({ children })=> {
             throw new Error("No Ethereum object");  
         }
         setSelectiveBids(bidsArray);
+    }
+
+    const withdrawBalance = async ()=>{
+        try{
+            if(tenderType==0){
+                const withdraw = await openTender.withdrawFunds(tdrID); 
+            }  
+            else{
+                const withdraw = await selectiveTender.withdrawFunds(tdrID); 
+            }
+
+        }catch(error){
+            console.log(error);
+            throw new Error("No ethereum object");
+        }
+
     }
 
     const checkIfWalletIsConnected = async ()=> {
@@ -277,7 +303,6 @@ export const TransactionProvider =({ children })=> {
             throw new Error("No Ethereum object");
         }
     }
-
  
     useEffect(()=>{
         checkIfWalletIsConnected();

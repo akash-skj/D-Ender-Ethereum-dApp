@@ -8,11 +8,10 @@ const Countdown = (props) =>{
     const[hrs,setHrs] = useState(props.hours+daysToHrs);
         
     useEffect(()=>{
-        console.log()
         const interval = setInterval(()=>{
             if(secs>0){
                 setSecs(secs-1);
-                console.log();
+                // console.log(hrs,mins,secs);
             }if(secs==0){
                 setSecs(59);
                 if(mins>0){
@@ -32,13 +31,13 @@ const Countdown = (props) =>{
     return(
         <div className="w-full"> 
             {props.state? 
-                    <div className="flex w-full justify-center items-center tooltip" data-tip="Bidding has started">
+                    <div className="flex w-full justify-center items-center tooltip tooltip-info" data-tip="Bidding has started">
                         <div className="bg-neutral font-bold rounded-xl font-mono text-xl px-9 p-2 ">
                         Started
                         </div>
                     </div>
                     :
-                    <div className="flex flex-row justify-evenly tooltip" data-tip="Starts in">
+                    <div className="flex flex-row justify-evenly tooltip tooltip-info" data-tip={props.tipData}>
                         <span className="countdown font-mono text-2xl bg-neutral rounded-xl p-2">                      
                             <span style={{"--value":hrs}}></span>h:
                             <span style={{"--value":mins}}></span>m:
