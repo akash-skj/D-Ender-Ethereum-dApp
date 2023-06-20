@@ -26,6 +26,13 @@ const Result = () => {
         loadOpenTdrs();    
         
     })
+    useEffect(()=>{
+        if(state==1){
+            selectOpenTender();
+        }else if( state == 2 ){
+            selectSelectiveTender();
+        }
+    })
 
     return (
         <div className="flex flex-col bg-base-300 h-full ml-2 rounded-lg p-5 bg-opacity-80">

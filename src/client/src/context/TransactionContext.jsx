@@ -256,16 +256,18 @@ export const TransactionProvider =({ children })=> {
         setSelectiveBids(bidsArray);
     }
 
-    const withdrawBalance = async ()=>{
+    const withdrawBalance = async ( id ) => {
         try{
             if(tenderType==0){
-                const withdraw = await openTender.withdrawFunds(tdrID); 
+                console.log(id);
+                const withdraw = await openTender.withdrawFunds(id); 
             }  
-            else{
-                const withdraw = await selectiveTender.withdrawFunds(tdrID); 
+            else if(tenderType==1){
+                const withdraw = await selectiveTender.withdrawFunds(id); 
             }
 
         }catch(error){
+            console.log(id);
             console.log(error);
             throw new Error("No ethereum object");
         }
@@ -311,7 +313,7 @@ export const TransactionProvider =({ children })=> {
 
 
     return(
-        <TransactionContext.Provider value={{connectWallet, currentAccount, handleChangeTitle, handleChangeDesc, handleChangeStartTime, handleChangeEndTime, selectOpenTender, selectSelectiveTender, createTender, loadOpenTdrs, loadSelectiveTdrs, handleChangeBidAmt, handleChangeBidderName, placeOpenBid, openTdrs, selectiveTdrs,setTdrID, tdrID, getPrevOpenBids, OpenBids, placeSelectiveBid, SelectiveBids, getPrevSelectiveBids}}>
+        <TransactionContext.Provider value={{connectWallet, currentAccount, handleChangeTitle, handleChangeDesc, handleChangeStartTime, handleChangeEndTime, selectOpenTender, selectSelectiveTender, createTender, loadOpenTdrs, loadSelectiveTdrs, handleChangeBidAmt, handleChangeBidderName, placeOpenBid, openTdrs, selectiveTdrs,setTdrID, tdrID, getPrevOpenBids, OpenBids, placeSelectiveBid, SelectiveBids, getPrevSelectiveBids, withdrawBalance}}>
             {children}
         </TransactionContext.Provider>
     )
