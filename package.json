@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "node": "^20.0.0",
     "truffle": "^5.7.7"
   }
 }

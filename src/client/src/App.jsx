@@ -1,5 +1,5 @@
-import { Navbar, Footer, Sidebar, Result } from "./components";
-import { Body, Admin, OpenTender, SelectiveTender, OpenBidPage , SelectiveBidPage} from "./pages"
+import { Navbar, Footer, Sidebar } from "./components";
+import { Body, Admin, OpenTender, SelectiveTender, OpenBidPage , SelectiveBidPage, Result} from "./pages"
 import background from "./assets/background.avif";
 import { BrowserRouter, Route, Routes } from"react-router-dom";
 

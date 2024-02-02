@@ -20,9 +20,9 @@ const SelectiveTender = () => {
     })
 
     return (
-        <div className="flex flex-col bg-base-300 h-full ml-2 rounded-xl p-5 bg-opacity-80 overflow-y-scroll scrollbar scrollbar-thumb-primary scrollbar-thin scrollbar-track-base-100">
+        <div className="flex flex-col bg-base-300 h-full ml-2 rounded-xl p-5 bg-opacity-80 overflow-y-scroll scrollbar scrollbar-thumb-primary scrollbar-thin scrollbar-track-base-100">  
             
-            <div className='sticky top-0'>
+            <div className=' top-0'>
                 <h1 className="font-bold text-4xl">SelectiveTender</h1>
             </div>
 
@@ -31,9 +31,9 @@ const SelectiveTender = () => {
                     <img src={loader} className='h-[100px]' alt="loading Animation" />
                 </div>
                 :
-                <div className="flex flex-wrap mt-4">
-                {selectiveTdrs.map((x)=>(<TenderCards key={x.tdrId.id.toString()} title = {x.tdrTitle.title} desc = {x.tdrDesc.desc} 
-                ended = {x.isEnded.ended} id = {x.tdrId.id.toString()} type = '1' />))}
+                <div className="flex flex-wrap mt-5">
+                {selectiveTdrs.map((x)=>(<TenderCards key={x.tdrId.id} title = {x.tdrTitle.title} desc = {x.tdrDesc.desc} 
+                ended = {x.isEnded.ended} id = {x.tdrId.id.toString()} startTime = {x.tdrStartTime.startTime} endTime = {x.tdrEndTime.endTime} currentTime = {x.currentTime.currentTime} type = '1' />))}
                 </div>
             }
 
@@ -41,4 +41,4 @@ const SelectiveTender = () => {
     )
 }
 
-export default SelectiveTender;
+export default SelectiveTender ;

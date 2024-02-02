@@ -48,7 +48,8 @@ export const TransactionProvider =({ children })=> {
     const [selectiveTdrs, setSelectiveTdrs] = useState([]);
     const [OpenBids, setOpenBids] = useState([]);
     const [SelectiveBids, setSelectiveBids] = useState([]);
-    const tdrsArray = [];
+    const opentdrsArray = [];
+    const selectivetdrsArray = [];
     const bidsArray = [];
 
     const handleChangeTitle = (e) => {
@@ -62,12 +63,12 @@ export const TransactionProvider =({ children })=> {
     }
 
     const handleChangeStartTime = (e) => {
-        setStartTime(e.target.value);
+        setStartTime(e);
         console.log(startTime);
     }
 
     const handleChangeEndTime = (e) => {
-        setEndTime(e.target.value);
+        setEndTime(e);
         console.log(endTime);
     }
 
@@ -116,6 +117,8 @@ export const TransactionProvider =({ children })=> {
         const tdrCount =  await openTender.getTdrCount();
         if(tdrCount>0){
             for( var i=0 ; i < tdrCount ; i++){
+                var winnerAddress;
+                var winningBid=0;
                 const tdrInfo = await openTender.getTdrInfo(i);
                 const id = tdrInfo.id.toString();
                 const title = tdrInfo.title;
@@ -125,20 +128,29 @@ export const TransactionProvider =({ children })=> {
                 const maxBid = tdrInfo.maxBid.toString();
                 const currentTime = parseInt(tdrInfo.currentTime.toString());
                 const ended = currentTime > endTime ;
+
+                if(ended){
+                    const tdrWinner = await openTender.getWinningBid(i);
+                    winnerAddress = tdrWinner.winnerAddress;
+                    winningBid = tdrWinner.winningBidAmt;
+                }
             
-                tdrsArray[i]={
+                opentdrsArray[i]={
                     tdrId: {id},
                     tdrTitle: {title},
                     tdrDesc: {desc},
                     tdrStartTime: {startTime},
                     tdrEndTime: {endTime},
+                    currentTime: {currentTime},
                     tdrMaxBid: {maxBid},
                     isEnded: {ended},
+                    winnerAdr : {winnerAddress},
+                    winningBid : {winningBid}
                 };
     
             }
             
-            setOpenTdrs(tdrsArray);
+            setOpenTdrs(opentdrsArray);
         }
     }
 
@@ -157,19 +169,20 @@ export const TransactionProvider =({ children })=> {
             const currentTime = parseInt(tdrInfo.currentTime.toString());
             const ended = currentTime > endTime ;
         
-            tdrsArray[i]={
+            selectivetdrsArray[i]={
                 tdrId: {id},
                 tdrTitle: {title},
                 tdrDesc: {desc},
                 tdrStartTime: {startTime},
                 tdrEndTime: {endTime},
+                currentTime: {currentTime},
                 tdrMaxBid: {maxBid},
                 isEnded: {ended},
             };
 
         }
         
-        setSelectiveTdrs(tdrsArray);
+        setSelectiveTdrs(selectivetdrsArray);
     }
 
     const placeOpenBid = async () => {
@@ -206,7 +219,7 @@ export const TransactionProvider =({ children })=> {
                     const count = await openTender.getBidderCountofTdr(tdrID);
                     for(var i=0; i <count;i++){
                         const bid = await openTender.getBiddersOfTdr(tdrID,i);
-                        const bidder=bid.bidder.toString();
+                        const bidder=bid.bidderAdr.toString();
                         const bidderAmt= bid.bidAmt.toString();
                         bidsArray[i]={
                             bidderAdr: {bidder},
@@ -218,6 +231,7 @@ export const TransactionProvider =({ children })=> {
             console.log(error);
             throw new Error("No Ethereum object");  
         }
+        // console.log(bidsArray);
         setOpenBids(bidsArray);
     }
 
@@ -227,7 +241,7 @@ export const TransactionProvider =({ children })=> {
                     const count = await selectiveTender.getBidderCountofTdr(tdrID);
                     for(var i=0; i <count;i++){
                         const bid = await selectiveTender.getBiddersOfTdr(tdrID,i);
-                        const bidder=bid.bidder.toString();
+                        const bidder= bid.bidderAdr.toString();
                         const bidderAmt= bid.bidAmt.toString();
                         bidsArray[i]={
                             bidderAdr: {bidder},
@@ -240,6 +254,24 @@ export const TransactionProvider =({ children })=> {
             throw new Error("No Ethereum object");  
         }
         setSelectiveBids(bidsArray);
+    }
+
+    const withdrawBalance = async ( id ) => {
+        try{
+            if(tenderType==0){
+                console.log(id);
+                const withdraw = await openTender.withdrawFunds(id); 
+            }  
+            else if(tenderType==1){
+                const withdraw = await selectiveTender.withdrawFunds(id); 
+            }
+
+        }catch(error){
+            console.log(id);
+            console.log(error);
+            throw new Error("No ethereum object");
+        }
+
     }
 
     const checkIfWalletIsConnected = async ()=> {
@@ -273,7 +305,6 @@ export const TransactionProvider =({ children })=> {
             throw new Error("No Ethereum object");
         }
     }
-
  
     useEffect(()=>{
         checkIfWalletIsConnected();
@@ -282,7 +313,7 @@ export const TransactionProvider =({ children })=> {
 
 
     return(
-        <TransactionContext.Provider value={{connectWallet, currentAccount, handleChangeTitle, handleChangeDesc, handleChangeStartTime, handleChangeEndTime, selectOpenTender, selectSelectiveTender, createTender, loadOpenTdrs, loadSelectiveTdrs, handleChangeBidAmt, handleChangeBidderName, placeOpenBid, openTdrs, selectiveTdrs,setTdrID, tdrID, getPrevOpenBids, OpenBids, placeSelectiveBid, SelectiveBids, getPrevSelectiveBids}}>
+        <TransactionContext.Provider value={{connectWallet, currentAccount, handleChangeTitle, handleChangeDesc, handleChangeStartTime, handleChangeEndTime, selectOpenTender, selectSelectiveTender, createTender, loadOpenTdrs, loadSelectiveTdrs, handleChangeBidAmt, handleChangeBidderName, placeOpenBid, openTdrs, selectiveTdrs,setTdrID, tdrID, getPrevOpenBids, OpenBids, placeSelectiveBid, SelectiveBids, getPrevSelectiveBids, withdrawBalance}}>
             {children}
         </TransactionContext.Provider>
     )

@@ -4,3 +4,4 @@ export{ default as OpenTender } from "./OpenTender";
 export{ default as SelectiveTender } from "./SelectiveTender";
 export{ default as OpenBidPage } from "./OpenBidPage";
 export{ default as SelectiveBidPage } from "./SelectiveBidPage";
+export{ default as Result } from "./Result";

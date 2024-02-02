@@ -77,6 +77,10 @@ contract selectiveDender {
         require(bytes(bidders[msg.sender].bidderName).length != 0, "Not in bidders list");
         if(bidders[msg.sender].bidded){
             amt=msg.value+bidders[msg.sender].bidAmt[_tdrID];
+            if(bidders[msg.sender].bidAmt[_tdrID]==0){
+                    tdrs[_tdrID].bidders[tdrs[_tdrID].bidCount]=msg.sender;
+                    tdrs[_tdrID].bidCount++;
+                }
         }else{
             amt=msg.value;
             tdrs[_tdrID].bidders[tdrs[_tdrID].bidCount]=msg.sender;
@@ -180,7 +184,7 @@ contract selectiveDender {
     function getBiddersOfTdr (uint _tdrID, uint _bidID)
     public
     view
-    returns(address bidder, uint bidAmt)
+    returns(address bidderAdr, uint bidAmt)
     {
         return(tdrs[_tdrID].bidders[_bidID], bidders[tdrs[_tdrID].bidders[_bidID]].bidAmt[_tdrID]);
     }

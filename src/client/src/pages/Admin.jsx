@@ -1,5 +1,6 @@
 import react, { useContext } from 'react';
 import { TransactionContext } from "../context/TransactionContext";
+import { DatePicker } from '../components';
 
 const Admin = () => {
 
@@ -35,12 +36,14 @@ const Admin = () => {
 
                     <div className="items-center m-3">
                         <h1 className="ml-4 mb-2 text-lg font-semibold">Start Time</h1>
-                        <input type="text" placeholder="Time in Epoch" className="input input-bordered input-primary w-full max-w-xs" onChange={handleChangeStartTime}/>
+                        {/* <input type="text" placeholder="Time in Epoch" className="input input-bordered input-primary w-full max-w-xs" onChange={handleChangeStartTime}/> */}
+                        <DatePicker handle={handleChangeStartTime}/>
                     </div>
 
                     <div className="items-center m-3">
                         <h1 className="ml-4 mb-2 text-lg font-semibold">End Time</h1>
-                        <input type="text" placeholder="Time in Epoch" className="input input-bordered input-primary w-full max-w-xs" onChange={handleChangeEndTime}/>
+                        {/* <input type="text" placeholder="Time in Epoch" className="input input-bordered input-primary w-full max-w-xs" onChange={handleChangeEndTime}/> */}
+                        <DatePicker handle={handleChangeEndTime}/>
                     </div>
                     
 

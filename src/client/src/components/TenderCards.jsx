@@ -1,14 +1,50 @@
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Countdown } from "./"
 
 const TenderCards = (props) => {
+
+    const startDate =   new Date(props.startTime*1000);
+    const currentDate = new Date(props.currentTime*1000);
+
+    const date = startDate - currentDate;
+
+    const started = date<0? true:false;
+    
+    const[secs, setSecs] = useState(Math.abs(Math.floor((date % (1000 * 60)) / 1000)));
+    const[mins,setMins] = useState(Math.abs(Math.floor((date % (1000 * 60 * 60)) / (1000 * 60))));
+    const[hrs,setHrs] = useState(Math.abs(Math.floor((date % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))));
+    const[days,setDays] = useState(Math.abs(Math.floor(date / (1000 * 60 * 60 * 24))));
+
+    // setDays(startDate.getHours()-currentDate.getHours());
     
     useEffect(()=>{
-        // console.log(props.type);
-    })
+        const interval = setInterval(()=>{
+            if(secs>0){
+                console.log(hrs);
+                setSecs(secs-1);
+            }if(secs==0 && mins>0){
+                setSecs(59);
+                if(mins>0){
+                    setMins(mins-1);
+                }
+            }if(mins==0&&hrs>0){
+                setMins(59);
+                if(hrs>0){
+                    setHrs(hrs-1);
+                }
+            }if(mins==0&&hrs==0){
+                setMins(0);
+                
+                setHrs(0);
+                
+            }
+        },1000);
+        return () => clearInterval(interval);
+
+    },[secs])
 
     return(
-        
         <div className=" flex flex-row flex-wrap justify-evenly ">
 
             {props.ended?
@@ -24,10 +60,14 @@ const TenderCards = (props) => {
                     {(props.desc.length)>250 && ( <div>{props.desc.slice(0,77)} . . .</div> )}
                     {(props.desc.length)<250 && ( <div>{props.desc}</div> )}
                 </div>
+
+                <Countdown days = {days} hours = {hrs} minutes = {mins} seconds = {secs} state = {started} tipData = {"Starts in"} /> 
+                
+
                 <div>
                     {props.type=='1'?
                     <Link to="/SelectiveBidPage" state={{tdr:{props}}}>  
-                    <button className="btn bg-base-100 m-3">Open s</button>
+                    <button className="btn bg-base-100 m-3">Open</button>
                     </Link>
                     :
                     <Link to="/OpenBidPage" state={{tdr:{props}}}>  
